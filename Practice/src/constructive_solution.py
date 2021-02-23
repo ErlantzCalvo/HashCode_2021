@@ -1,42 +1,13 @@
 #!/usr/bin/env python3
 
+'''
+Score: 519,963,496 points
+'''
+
 import sys
+sys.path.append('../..')
 
-def read_input(filename):
-    pizzas = []
-    teams = {2: None, 3: None, 4:None}
-    
-    f = open(filename, "r")
-    first_line = f.readline().rstrip('\n').split(' ')
-    n_pizzas = int(first_line[0])
-    
-    for i in [1, 2, 3]:
-        teams[i + 1] = int(first_line[i])
-    
-    while True:
-        line = f.readline()
-        if line == "":
-            break
-        pizzas.append(line.rstrip('\n').split(' ')[1:])
-    
-    f.close()
-    if len(pizzas) != n_pizzas:
-        raise ValueError(f"Number of read pizzas ({len(pizzas)}) does not equal expected number of pizzas ({n_pizzas}).")
-
-    return pizzas, teams
-
-def write_output(filename, deliveries, n_deliveries):
-    f = open(filename, "w")
-    f.write(f"{n_deliveries}\n")
-
-    for i in range(len(deliveries)):
-        for j in range(len(deliveries[i])):
-            f.write(f"{i + 2}")
-            for p in deliveries[i][j]:
-                f.write(f" {p}")
-            f.write("\n")
-    
-    f.close()
+from utils.io import read_input, write_output
 
 def heuristic_sort(pizzas, ingredient_set):
     global pizza_database
@@ -44,8 +15,8 @@ def heuristic_sort(pizzas, ingredient_set):
     for i in pizzas:
         heuristic_value = 0
         for j in pizza_database[i]:
-            heuristic_value += -0.5 if j in ingredient_set else 1
-        pizza_map.append((i, heuristic_value))
+            heuristic_value += 0 if j in ingredient_set else 1
+        pizza_map.append((i, heuristic_value * heuristic_value))
     
     sorted_pizzas = sorted(pizza_map, key=lambda x: x[1], reverse=True)
     return [x[0] for x in sorted_pizzas]
