@@ -34,3 +34,16 @@ def write_output(filename, deliveries, n_deliveries):
     
     f.close()
     
+def read_input_qualification(filename):
+    f = open(filename, "r")
+
+    # TODO: fill me
+
+    return None
+
+def write_output_qualification(filename, *args):
+    f = open(filename, "w")
+
+    # TODO: fill me
+
+    pass
